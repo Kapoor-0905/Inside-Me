@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:appwrite/appwrite.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:inside_me/screens/splashScreen/splashScreen.dart';
 
-void main() {
-  Client client = Client();
-  client
-      .setEndpoint('http://localhost/v1')
-      .setProject('inside_me')
-      .setSelfSigned(
-          status:
-              true); // For self signed certificates, only use for development
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
+  await Supabase.initialize(
+      anonKey:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1obXFyb29qdHN3d256YXJzcXBnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODE2NTU5MTMsImV4cCI6MTk5NzIzMTkxM30.K-_-3tNGM40kTGrfVoakPIdLc8oTrxeyeplsgjuoT_o',
+      url: 'https://mhmqroojtswwnzarsqpg.supabase.co');
+
   runApp(const MyApp());
 }
 
@@ -21,32 +23,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Container(
-        color: Colors.red,
-        child: Column(
-          children: [
-            Center(
-              child: Text(
-                'Hello World',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                ),
-              ),
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  // launch url
-                  launchUrl(Uri.parse(
-                      'http://localhost/v1/account/sessions/oauth2/callback/google/inside_me'));
-                },
-                child: Text('Click Me')),
-          ],
-        ),
-      ),
+      home: SplashScreen(),
     );
   }
 }
