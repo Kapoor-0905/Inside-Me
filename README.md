@@ -1,5 +1,4 @@
 # inside_me
-![GitHub contributors](https://img.shields.io/github/contributors/Kapoor-0905/Inside-Me)
 
 A new Flutter project.
 
